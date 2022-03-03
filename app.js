@@ -1,10 +1,15 @@
+const form = document.querySelector('.inputs-container');
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const button = document.getElementById("btn");
+const usersArray = [];
+const userLS = JSON.parse(localStorage.getItem('Users'));
+
 
 button.addEventListener("click", (e) => {
     e.preventDefault();
+    capturar();
 })
 
 const capturar = () => {
@@ -27,7 +32,17 @@ const capturar = () => {
         password.focus();
     }
 
-    console.log(`Username: ${userval},
-Email: ${emailval},
-Password: ${passval}.`);
-}
+    usersArray.push({
+        username: userval,
+        email: emailval,
+        password: passval
+    })
+    
+    usersArray.forEach(User => {
+        localStorage.setItem('Users', JSON.stringify(usersArray))
+    });
+
+    form.reset()
+    }
+
+    console.log(userLS)
