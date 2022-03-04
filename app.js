@@ -1,66 +1,50 @@
-const form = document.querySelector('.inputs-container');
+const form = document.querySelector(".inputs-container");
 const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const button = document.getElementById("btn");
 
-let usersArray = [];
-// let userLS = JSON.parse(localStorage.getItem('Users'));
+let usersArray;
 
+const checkLocalStorage = () => {
+  const usersFromLocalStorage = JSON.parse(localStorage.getItem("Users"));
+
+  if (usersFromLocalStorage === null) {
+    usersArray = [];
+  } else {
+    usersArray = usersFromLocalStorage;
+  }
+};
+
+checkLocalStorage();
 
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    capturar();
-    form.reset();
+  e.preventDefault();
+  capture();
+  form.reset();
+});
 
-})
+const capture = () => {
+  let userval = username.value;
+  let emailval = email.value;
+  let passval = password.value;
 
-const capturar = () => {
-    let userval = username.value;
-    let emailval = email.value;
-    let passval = password.value;
+  if (userval == "") {
+    alert("Please, set a username.");
+    username.focus();
+  } else if (emailval == "") {
+    alert("Please, set an Email.");
+    email.focus();
+  } else if (passval == "") {
+    alert("Please, set a Password.");
+    password.focus();
+  }
 
-    if (userval=="") {
-        alert("Please, set a username.")
-        username.focus();
-    }
+  usersArray.push({
+    username: userval,
+    email: emailval,
+    password: passval,
+  });
 
-    else if (emailval=="") {
-        alert("Please, set an Email.")
-        email.focus();
-    }
-
-    else if (passval=="") {
-        alert("Please, set a Password.")
-        password.focus();
-    }
-
-    usersArray.push({
-        username: userval,
-        email: emailval,
-        password: passval
-    });
-
-    usersArray.forEach(User => {
-        localStorage.setItem('Users', JSON.stringify(usersArray))
-    });
-    
-}
-
-    const saveLS = () => {
-       
-        usersArray = JSON.parse(localStorage.getItem('Users'));
-
-        if (usersArray === null) {
-            usersArray = [];
-        };
-    }
-   
-    document.addEventListener('DOMContentLoaded', saveLS);
-
-// if (usersArray.length == 0) {
-//     usersArray = userLS
-// };
-
-
-   
+  localStorage.setItem("Users", JSON.stringify(usersArray));
+};
