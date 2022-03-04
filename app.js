@@ -3,13 +3,16 @@ const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const button = document.getElementById("btn");
-const usersArray = [];
-const userLS = JSON.parse(localStorage.getItem('Users'));
+
+let usersArray = [];
+// let userLS = JSON.parse(localStorage.getItem('Users'));
 
 
-button.addEventListener("click", (e) => {
+form.addEventListener("submit", (e) => {
     e.preventDefault();
     capturar();
+    form.reset();
+
 })
 
 const capturar = () => {
@@ -36,13 +39,28 @@ const capturar = () => {
         username: userval,
         email: emailval,
         password: passval
-    })
-    
+    });
+
     usersArray.forEach(User => {
         localStorage.setItem('Users', JSON.stringify(usersArray))
     });
+    
+}
 
-    form.reset()
+    const saveLS = () => {
+       
+        usersArray = JSON.parse(localStorage.getItem('Users'));
+
+        if (usersArray === null) {
+            usersArray = [];
+        };
     }
+   
+    document.addEventListener('DOMContentLoaded', saveLS);
 
-    console.log(userLS)
+// if (usersArray.length == 0) {
+//     usersArray = userLS
+// };
+
+
+   
